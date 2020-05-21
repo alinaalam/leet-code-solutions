@@ -10,6 +10,10 @@
  */
 class Solution {
     public ListNode oddEvenList(ListNode head) {
+        return approach2(head);
+    }
+    
+    public ListNode approach1(ListNode head) {
         // sanity check
         if (head == null || head.next == null) {
             return head;
@@ -37,6 +41,26 @@ class Solution {
             counter++;
             temp = next;
         }
+        
+        return head;
+    }
+    
+    public ListNode approach2(ListNode head) {
+        // sanity check
+        if (head == null) {
+            return head;
+        }
+        
+        ListNode odd = head, even = head.next, evenHead = even;
+        
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        
+        odd.next = evenHead;
         
         return head;
     }
