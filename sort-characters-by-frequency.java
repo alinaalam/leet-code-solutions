@@ -1,3 +1,7 @@
+/**
+* Sort Characters By Frequency
+* https://leetcode.com/problems/sort-characters-by-frequency/
+*/
 class Solution {
     public String frequencySort(String s) {
         Map<Character, Integer> map = new HashMap<>();
@@ -9,18 +13,23 @@ class Solution {
         
         StringBuilder sb = new StringBuilder();
         
-        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+        List<Character> keys = new ArrayList<>(map.keySet());
         
-        Set<Character> keys = map.keySet();
-        
-        Collections.sort(keys, new Comparator() {
+        // sort keys in decreasing order
+        Collections.sort(keys, new Comparator<Character> () {
             @Override
-            public int compare(Object obj1, Object obj2) {
-                return 0;
+            public int compare(Character key1, Character key2) {
+                return Integer.compare(map.get(key2), map.get(key1));
             }
         });
+        
+        for (Character c : keys) {
+            // for each character, append them according to their frequency
+            int frequency = map.get(c);
+            for (int i = 0; i < frequency; i++) {
+                sb.append(c);
+            }
+        }
         
         return sb.toString();
     }
