@@ -11,19 +11,17 @@ class Solution {
             map.put(c, frequency + 1);
         }
         
+        // store keys in descending order in a priority queue
+        PriorityQueue<Character> queue = new PriorityQueue<>((a, b) ->
+            Integer.compare(map.get(b), map.get(a)) 
+        );
+        
+        queue.addAll(map.keySet());
+        
         StringBuilder sb = new StringBuilder();
         
-        List<Character> keys = new ArrayList<>(map.keySet());
-        
-        // sort keys in decreasing order
-        Collections.sort(keys, new Comparator<Character> () {
-            @Override
-            public int compare(Character key1, Character key2) {
-                return Integer.compare(map.get(key2), map.get(key1));
-            }
-        });
-        
-        for (Character c : keys) {
+        while(!queue.isEmpty()) {
+            char c = queue.remove();
             // for each character, append them according to their frequency
             int frequency = map.get(c);
             for (int i = 0; i < frequency; i++) {
