@@ -4,25 +4,21 @@
 */
 class Solution {
     public int climbStairs(int n) {
-        List<List<Integer>> paths = new ArrayList<>();
-		generatePossiblePaths(0, n, new ArrayList<Integer>(), paths);
-        return paths.size();
+        int memo[] = new int[n + 1];
+        return climb_Stairs(0, n, memo);
     }
     
-    private static void generatePossiblePaths(int step, int steps, List<Integer> path, List<List<Integer>> paths) {
-		List<Integer> newPath = new ArrayList<>(path);
-		newPath.add(step);
-		
-		if (step == steps) {
-			paths.add(newPath);
-			return;
-		}
-		
-		if (step + 1 <= steps) {
-			generatePossiblePaths(step + 1, steps, newPath, paths);
-		}
-		if (step + 2 <= steps) {
-			generatePossiblePaths(step + 2, steps, newPath, paths);
-		}
-	}
+    public int climb_Stairs(int i, int n, int memo[]) {
+        if (i > n) {
+            return 0;
+        }
+        if (i == n) {
+            return 1;
+        }
+        if (memo[i] > 0) {
+            return memo[i];
+        }
+        memo[i] = climb_Stairs(i + 1, n, memo) + climb_Stairs(i + 2, n, memo);
+        return memo[i];
+    }
 }
